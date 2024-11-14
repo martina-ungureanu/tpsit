@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>js2</title>
+    <style>
+        
+        #bottone1 {
+            display: inline-block;
+            padding: 15px 25px;
+            font-size: 24px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            outline: none;
+            color: #fff;
+            background-color: yellow;
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 9px #999;
+        }
+
+        #bottone1:hover {
+            background-color: #f1e500; 
+        }
+
+        #bottone1:active {
+            background-color: #d4c100;
+            box-shadow: 0 5px #666;
+            transform: translateY(4px);
+        }
+
+       
+        #bottone2 {
+            display: inline-block;
+            padding: 15px 25px;
+            font-size: 24px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            outline: none;
+            color: #fff;
+            background-color: blue;
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 9px #999;
+        }
+
+        #bottone2:hover {
+            background-color: #0066cc; 
+        }
+
+        #bottone2:active {
+            background-color: #0055a5;
+            box-shadow: 0 5px #666;
+            transform: translateY(4px);
+        }
+
+        
+        #bottone3 {
+            display: inline-block;
+            padding: 15px 25px;
+            font-size: 24px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            outline: none;
+            color: #fff;
+            background-color: red;
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 9px #999;
+        }
+
+        #bottone3:hover {
+            background-color: #cc0000; 
+        }
+
+        #bottone3:active {
+            background-color: #990000;
+            box-shadow: 0 5px #666;
+            transform: translateY(4px);
+        }
+    </style>
+</head>
+<body>
+
+    <p>JS1</p>
+    <p>Primo esercizio js1: bottone e alert</p>
+
+    <!-- Campo di input -->
+    <input type="text" id="mioinput1">
+
+    <!-- Bottoni con eventi onclick -->
+    <button id="bottone1" onclick="aprifinestra1()">FORZA</button>
+    <button id="bottone2" onclick="aprifinestra2()">LA</button>
+    <button id="bottone3" onclick="aprifinestra3()">ROMANIA</button>
+
+    <!-- Div per visualizzare i risultati (se necessario) -->
+    <div>
+        <p id="out1">Risultato: </p>
+    </div>
+
+    <script>
+        // Funzione chiamata quando si clicca il bottone "FORZA"
+        function aprifinestra1() {
+            let i = document.getElementById("mioinput1").value;  // Ottieni il valore dal campo input
+            alert("Viva la Romania: " + i);  // Mostra un alert con il valore
+        }
+
+        // Funzione chiamata quando si clicca il bottone "LA"
+        function aprifinestra2() {
+            let i = document.getElementById("mioinput1").value;  // Ottieni il valore dal campo input
+            alert("TOP: " + i);  // Mostra un alert con il valore
+        }
+
+        // Funzione chiamata quando si clicca il bottone "ROMANIA"
+        function aprifinestra3() {
+            let i = document.getElementById("mioinput1").value;  // Ottieni il valore dal campo input
+            alert("NUMERI 1: " + i);  // Mostra un alert con il valore
+        }
+    </script>
+
+</body>
+</html>
