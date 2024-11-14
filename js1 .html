@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bottoni con Alert</title>
+    <style>
+        /* Stilizzazione dei bottoni */
+        .btn-1 {
+            display: inline-block;
+            padding: 15px 25px;
+            font-size: 24px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            outline: none;
+            color: #fff;
+            background-color: yellow;
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 9px #999;
+          }
+          
+          .bnt-1:hover {background-color: lightyellow}
+          
+          .bnt-1:active {
+            background-color: #3e468e;
+            box-shadow: 0 5px #666;
+            transform: translateY(4px);
+          } 
+
+        
+     
+
+       
+
+        
+        .btn-2 {
+            display: inline-block;
+            padding: 15px 25px;
+            font-size: 24px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            outline: none;
+            color: #fff;
+            background-color: blue;
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 9px #999;
+          }
+        .btn-2:hover {
+            background-color: lightblue;
+        }
+        .btn-2:active {
+            background-color: #3e468e;
+            box-shadow: 0 5px #666;
+            transform: translateY(4px);
+          } 
+
+        
+        .btn-3 {
+            display: inline-block;
+            padding: 15px 25px;
+            font-size: 24px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            outline: none;
+            color: #fff;
+            background-color: red;
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 9px #999;
+          }
+
+        .btn-3:hover {
+            background-color: lightcoral;
+        }
+        .btn-3:active {
+            background-color: #3e468e;
+            box-shadow: 0 5px #666;
+            transform: translateY(4px);
+          } 
+       
+    </style>
+</head>
+<body>
+
+    <!-- Contenitore dei bottoni -->
+    <div class="button-container">
+        <button class="btn btn-1" onclick="showAlert1()">FORZA</button>
+        <button class="btn btn-2" onclick="showAlert2()">LA</button>
+        <button class="btn btn-3" onclick="showAlert3()">ROMANIA</button>
+    </div>
+
+    <script>
+        // Funzioni per i 3 alert
+        function showAlert1() {
+            alert("Hai cliccato il primo bottone!");
+        }
+
+        function showAlert2() {
+            alert("Hai cliccato il secondo bottone!");
+        }
+
+        function showAlert3() {
+            alert("Hai cliccato il terzo bottone!");
+        }
+    </script>
+
+</body>
+</html>
