@@ -1,0 +1,88 @@
+
+    
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aforismi di Scienziati</title>
+    <style>
+        /* Stile base per la pagina */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        /* Stile per i div che contengono gli aforismi */
+        .aforisma {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #f0f0f0;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .aforisma p {
+            font-size: 18px;
+            color: #333;
+        }
+
+    
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Aforismi di Scienziati</h2>
+
+    <div class="aforisma">
+        <p id="aforisma1">"La scienza è organizzata conoscenza. La saggezza è organizzata vita." - Immanuel Kant</p>
+        <button onclick="nascondiTesto('aforisma1')">Nascondi</button>
+    </div>
+
+    <div class="aforisma">
+        <p id="aforisma2">"Se conoscessimo il problema, non sarebbe chiamato ricerca, sarebbe chiamato a ricerca." - Albert Einstein</p>
+        <button onclick="nascondiTesto('aforisma2')">Nascondi</button>
+    </div>
+
+    <div class="aforisma">
+        <p id="aforisma3">"La scienza non è mai stata e non sarà mai una questione di verità assoluta." - Niels Bohr</p>
+        <button onclick="nascondiTesto('aforisma3')">Nascondi</button>
+    </div>
+
+    <div class="aforisma">
+        <p id="aforisma4">"L'immaginazione è più importante della conoscenza." - Albert Einstein</p>
+        <button onclick="nascondiTesto('aforisma4')">Nascondi</button>
+    </div>
+
+    <div class="aforisma">
+        <p id="aforisma5">"La scienza è un modo di pensare molto più che un corpo di conoscenze." - Carl Sagan</p>
+        <button onclick="nascondiTesto('aforisma5')">Nascondi</button>
+    </div>
+
+    <script>
+        // Funzione per nascondere il testo di un aforisma
+        function nascondiTesto(id) {
+            const testo = document.getElementById(id);  
+            testo.style.display = "none";  // Nasconde l'elemento
+        }
+    </script>
+
+</body>
+</html>
