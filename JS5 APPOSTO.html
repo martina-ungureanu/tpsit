@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>media dei voti di martina</title>
+</head>
+<body>
+    <div class="container">
+        <h2>Inserisci i 5 voti</h2>
+
+        <label for="num1">Voto 1:</label><br>
+        <input type="number" id="num1" min="0" max="10" required><br>
+
+        <label for="num2">Voto 2:</label><br>
+        <input type="number" id="num2" min="0" max="10" required><br>
+
+        <label for="num3">Voto 3:</label><br>
+        <input type="number" id="num3" min="0" max="10" required><br>
+
+        <label for="num4">Voto 4:</label><br>
+        <input type="number" id="num4" min="0" max="10" required><br>
+
+        <label for="num5">Voto 5:</label><br>
+        <input type="number" id="num5" min="0" max="10" required><br>
+
+        <button onclick="gestisciCalcolo()">Calcola Media dei Voti di Martina</button>
+
+        <div id="result" class="result"></div>
+    </div>
+    <script>
+        // Funzione per calcolare la media accettando 5 parametri
+        function calcolaMedia(a, b, c, d, e) {
+            return (a + b + c + d + e) / 5;
+        }
+    
+        // Funzione per gestire gli input e mostrare il risultato
+        function gestisciCalcolo() {
+            // Leggi i valori degli input
+            const num1 = parseFloat(document.getElementById('num1').value);
+            const num2 = parseFloat(document.getElementById('num2').value);
+            const num3 = parseFloat(document.getElementById('num3').value);
+            const num4 = parseFloat(document.getElementById('num4').value);
+            const num5 = parseFloat(document.getElementById('num5').value);
+    
+            // Controlla se i valori sono numeri validi
+            if (isNaN(num1) || isNaN(num2) || isNaN(num3) || isNaN(num4) || isNaN(num5)) {
+                document.getElementById('result').innerText = "Per favore, inserisci tutti i numeri.";
+                return;
+            }
+    
+            // Calcola la media usando la funzione con 5 parametri
+            const media = calcolaMedia(num1, num2, num3, num4, num5);
+    
+            // Mostra il risultato
+            document.getElementById('result').innerText = `La media è: ${media.toFixed(2)}`;
+        }
+    </script>
+</body>
+</html>
