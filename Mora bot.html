@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Morra Cinese</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #e2b0df;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            background-color: #ffffff;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #c233df;
+            font-weight: 600;
+        }
+
+        p {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .choice {
+            background-color: #6fe7f7;
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            font-size: 18px;
+            margin: 5px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s ease-in-out;
+        }
+
+        .choice:hover {
+            background-color: #45a049;
+            transform: scale(1.1);
+        }
+
+        .result {
+            font-size: 18px;
+            margin-top: 10px;
+        }
+
+        #outcome {
+            font-weight: bold;
+        }
+
+        #outcome.win {
+            color: #f18585;
+        }
+
+        #outcome.lose {
+            color: #dc3545;
+        }
+
+        #outcome.draw {
+            color: #f08b2c;
+        }
+
+        .choice:active {
+            transform: scale(1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Gioco della Morra Cinese</h1>
+        <p>Scegli tra: Sasso, Carta, Forbici</p>
+
+        <div class="buttons">
+            <button class="choice" id="sasso">Sasso</button>
+            <button class="choice" id="carta">Carta</button>
+            <button class="choice" id="forbici">Forbici</button>
+        </div>
+
+        <div class="result">
+            <p id="your-choice">La tua scelta: </p>
+            <p id="computer-choice">Scelta del computer: </p>
+            <p id="outcome"></p>
+        </div>
+    </div>
+
+    <script>
+        // Funzione per ottenere la scelta casuale del computer
+        function getComputerChoice() {
+            const choices = ["sasso", "carta", "forbici"];
+            const randomIndex = Math.floor(Math.random() * choices.length);
+            return choices[randomIndex];
+        }
+
+        // Funzione per determinare il risultato
+        function determineWinner(playerChoice, computerChoice) {
+            if (playerChoice == computerChoice) {
+                return "pareggio";
+            }
+            if (
+                (playerChoice == "sasso" && computerChoice === "forbici") ||
+                (playerChoice == "forbici" && computerChoice === "carta") ||
+                (playerChoice == "carta" && computerChoice === "sasso")
+            ) {
+                return "win";
+            }
+            return "lose";
+        }
+
+        // Aggiungere gli eventi ai pulsanti
+        const buttons = document.querySelectorAll('.choice');
+        buttons.forEach(button => {
+            button.addEventListener('click', function() {
+                const playerChoice = this.id; // La scelta del giocatore
+                const computerChoice = getComputerChoice(); // La scelta del computer
+                const outcome = determineWinner(playerChoice, computerChoice); // Determina il vincitore
+
+                // Mostra il risultato sullo schermo
+                document.getElementById('your-choice').textContent = `La tua scelta: ${playerChoice}`;
+                document.getElementById('computer-choice').textContent = `Scelta del computer: ${computerChoice}`;
+
+                const outcomeText = document.getElementById('outcome');
+                if (outcome === "win") {
+                    outcomeText.textContent = "Hai vinto!";
+                    outcomeText.className = "win";
+                } else if (outcome === "lose") {
+                    outcomeText.textContent = "Hai perso!";
+                    outcomeText.className = "lose";
+                } else {
+                    outcomeText.textContent = "È un pareggio!";
+                    outcomeText.className = "draw";
+                }
+            });
+        });
+    </script>
+</body>
+</html>
