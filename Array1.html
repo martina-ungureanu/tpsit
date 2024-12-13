@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analisi Numerica array1</title>
+</head>
+<body>
+    <h1>Analisi Numerica array1</h1>
+    <p>Imparo ad usare gli array con i numeri</p>
+    <p>Sviluppo di algoritmi che possono inserire numeri particolari negli array</p>
+
+    <p>Lista numeri casuali tra 1 e 100:</p>
+    <p id="out1"></p>
+
+    <p>Lista numeri consecutivi tra 1 e 1000:</p>
+    <p id="out2"></p>
+
+    <p>10 numeri primi casuali:</p>
+    <p id="out3"></p>
+
+    <p>Numeri primi tra 1 e 100:</p>
+    <p id="out4"></p>
+
+    <p>Fattoriali dei numeri da 1 a 100:</p>
+    <p id="out5"></p>
+
+    <script>
+        
+        function InserisciNumeroCasuale(i) {
+            let numeroCasuale = Math.floor(Math.random() * 100) + 1; 
+            numeriCasuali[i] = numeroCasuale;
+        }
+
+        
+        function IsPrime(n) {
+            if (n <= 1) return false; 
+            for (let i = 2; i <= Math.sqrt(n); i++) {
+                if (n % i === 0) return false;
+            }
+            return true;
+        }
+
+        
+        let numeriCasuali = [];
+        for (let i = 0; i < 100; i++) {
+            InserisciNumeroCasuale(i);
+        }
+        document.getElementById("out1").innerHTML = numeriCasuali.join(", ");
+
+        
+        let numeriConsecutivi = [];
+        for (let i = 1; i <= 100; i++) {
+            numeriConsecutivi.push(i);
+        }
+        document.getElementById("out2").innerHTML = numeriConsecutivi.join(", ");
+
+        
+        let numeriPrimiCasuali = [];
+        while (numeriPrimiCasuali.length < 10) {
+            let numeroCasuale = Math.floor(Math.random() * 100) + 1; 
+            if (IsPrime(numeroCasuale) && !numeriPrimiCasuali.includes(numeroCasuale)) {
+                numeriPrimiCasuali.push(numeroCasuale);
+            }
+        }
+        document.getElementById("out3").innerHTML = numeriPrimiCasuali.join(", ");
+
+        
+        let numeriPrimiTra1e100 = [];
+        for (let i = 1; i <= 100; i++) {
+            if (IsPrime(i)) {
+                numeriPrimiTra1e100.push(i);
+            }
+        }
+        document.getElementById("out4").innerHTML = numeriPrimiTra1e100.join(", ");
+
+        
+        let fattori = "";
+        for (let i = 1; i <= 100; i++) {
+            let fattoriNumero = [];
+            for (let j = 1; j <= i; j++) {
+                if (i % j === 0) {
+                    fattoriNumero.push(j);
+                }
+            }
+            fattori += `Number ${i}: ${fattoriNumero.join(", ")}<br>`;
+        }
+        document.getElementById("out5").innerHTML = fattori;
+    </script>
+</body>
+</html>
