@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulazione verifica</title>
+</head>
+<body>
+<h1>Simulazione verifica</h1>   
+<p id="out1"></p>
+<p id="out2"></p>
+<p id="out3"></p>
+<p id="out4"></p>
+<p id="out5"></p>
+<p id="out6"></p>
+<p id="out7"></p>
+<p id="out8"></p>
+
+
+
+    <script>
+        setInterval(getTime,5000)
+
+      
+function isPrime(numero) {
+  if (numero<= 1) return true;
+  for (let i = 2; i <= Math.sqrt(numero); i++) {
+    if (numero % i === 0) return false;
+  }
+  return true;
+}
+        
+        function getTime() {
+            numero = Math.floor(Math.random()*1000);
+            document.getElementById("out1").innerHTML = numero;
+
+            if(numero % 2 == 0){
+                document.getElementById("out2").innerHTML = numero + " è pari"
+                
+            }
+            else{
+                document.getElementById("out2").innerHTML = numero + " è dispari"
+            }
+            
+            if(isPrime(numero)){
+                document.getElementById("out3").innerHTML = numero + " è un numero primo"
+            }
+            else{
+                document.getElementById("out3").innerHTML = numero + " non è un numero primo"
+            }
+            doppionumero = numero * 2
+            document.getElementById("out4").innerHTML = "Il doppio del numero " + numero + " è " + doppionumero;
+
+            metanumero = Math.floor(numero / 2);
+            document.getElementById("out5").innerHTML = "Il metà del numero " + numero + " è " + metanumero;
+
+            complemento = 1000 -numero;
+            document.getElementById("out6").innerHTML =  "il complemento del numero " + numero +  " è " + complemento
+
+            sommanumero = numero + numero-1 + numero+1 
+            document.getElementById("out7").innerHTML =  "il numero complesso del numero " + numero + " è " + sommanumero
+
+            pgreco = numero * 3,14
+            document.getElementById("out8").innerHTML =  "il numero " + numero + " moltiplicato per pgreco è " + pgreco
+
+
+        }
+    </script>
+</body>
+</html>
