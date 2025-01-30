@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Burger King</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fff8e1;
+            color: #000;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #d11d2d;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+            font-size: 2em;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+        }
+        .menu-category {
+            margin-top: 20px;
+        }
+        h2 {
+            font-size: 1.5em;
+            color: #d11d2d;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #d11d2d;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    Menu Burger King
+</header>
+
+<div class="container">
+    <div class="menu-category">
+        <h2>Hamburger</h2>
+        <ul>
+            <li>Whopper - €6.50</li>
+            <li>Cheeseburger - €3.00</li>
+            <li>Double Whopper - €8.00</li>
+            <li>Chicken Royale - €5.50</li>
+        </ul>
+    </div>
+
+    <div class="menu-category">
+        <h2>Patatine</h2>
+        <ul>
+            <li>Patatine piccole - €2.00</li>
+            <li>Patatine medie - €2.50</li>
+            <li>Patatine grandi - €3.00</li>
+        </ul>
+    </div>
+
+    <div class="menu-category">
+        <h2>Bevande</h2>
+        <ul>
+            <li>Coca-Cola - €2.00</li>
+            <li>Sprite - €2.00</li>
+            <li>Acqua - €1.50</li>
+            <li>Succo di frutta - €2.50</li>
+        </ul>
+    </div>
+
+    <div class="menu-category">
+        <h2>Dolci</h2>
+        <ul>
+            <li>Ice Cream Sundae - €3.00</li>
+            <li>Chocolate Pie - €2.50</li>
+            <li>Cookie - €1.50</li>
+        </ul>
+    </div>
+</div>
+
+<footer>
+    &copy; 2025 Burger King
+</footer>
+
+</body>
+</html>
