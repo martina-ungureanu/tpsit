@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lezione Bootstrap</title>
+    <!-- CSS di Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Personalizzazione della navbar */
+        .navbar {
+            background-color: #343a40;
+        }
+        .navbar-brand {
+            color: #f8f9fa;
+        }
+        .navbar-nav .nav-link {
+            color: #f8f9fa;
+        }
+        .navbar-nav .nav-link.active {
+            color: #ffd700;
+        }
+        
+        /* Styling per il container principale */
+        .container {
+            max-width: 1200px;
+        }
+
+        h2 {
+            color: #343a40;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        /* Personalizzazione delle card */
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .card img {
+            border-radius: 10px 10px 0 0;
+        }
+        .card-body {
+            background-color: #f8f9fa;
+        }
+
+        /* Stile per i bottoni */
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+            border-color: #6c757d;
+        }
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            border-color: #5a6268;
+        }
+        
+        /* Spaziatura extra */
+        .my-4 {
+            margin-top: 40px;
+            margin-bottom: 40px;
+        }
+
+        .row > .col {
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="#">Lezione Bootstrap</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Layout Responsive -->
+    <div class="container my-4">
+        <h2>Layout Responsive</h2>
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-12 p-3">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        Colonna 1
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12 p-3">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        Colonna 2
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12 p-3">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        Colonna 3
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container my-4">
+        <div class="row">
+            <div class="col-md-6 p-3">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        50% Larghezza su Desktop
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 p-3">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        50% Larghezza su Desktop
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottoni -->
+    <div class="container my-4">
+        <h2>Bottoni</h2>
+        <button class="btn btn-primary">Primario</button>
+        <button class="btn btn-secondary">Secondario</button>
+    </div>
+
+    <!-- Card -->
+    <div class="container my-4">
+        <h2>Componente Card</h2>
+        <div class="card shadow-sm" style="width: 18rem;">
+            <img src="montagne.jpg" class="card-img-top" alt="Immagine">
+            <div class="card-body">
+                <h5 class="card-title">Titolo della Card</h5>
+                <p class="card-text">Testo della card. Un esempio di contenuto card con un'immagine in cima e un testo informativo.</p>
+                <a href="#" class="btn btn-primary">Vai</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
