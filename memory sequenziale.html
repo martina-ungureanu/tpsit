@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Sequenziale</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .game-button {
+            width: 100px;
+            height: 100px;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .game-button.active {
+            background-color: #ffd700 !important;
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
+        }
+        
+        .disabled {
+            pointer-events: none;
+        }
+
+        #resetBtn {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8 text-center">
+                <h1 class="mb-4">Memory Sequenziale</h1>
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <div class="mb-4">
+                            <h3>Punteggio: <span id="score">0</span></h3>
+                            <p id="message" class="lead">Premi Start per iniziare!</p>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <button id="startBtn" class="btn btn-primary btn-lg px-4">Start</button>
+                            <button id="resetBtn" class="btn btn-danger btn-lg px-4">Reset</button>
+                        </div>
+
+                        <div class="game-grid">
+                            <div class="row justify-content-center">
+                                <div class="col-auto">
+                                    <button class="game-button btn btn-secondary" data-index="0"></button>
+                                    <button class="game-button btn btn-secondary" data-index="1"></button>
+                                    <button class="game-button btn btn-secondary" data-index="2"></button>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="col-auto">
+                                    <button class="game-button btn btn-secondary" data-index="3"></button>
+                                    <button class="game-button btn btn-secondary" data-index="4"></button>
+                                    <button class="game-button btn btn-secondary" data-index="5"></button>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="col-auto">
+                                    <button class="game-button btn btn-secondary" data-index="6"></button>
+                                    <button class="game-button btn btn-secondary" data-index="7"></button>
+                                    <button class="game-button btn btn-secondary" data-index="8"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class MemoryGame {
+            constructor() {
+                this.sequence = [];
+                this.playerSequence = [];
+                this.score = 0;
+                this.isPlaying = false;
+                this.buttons = document.querySelectorAll('.game-button');
+                this.startBtn = document.getElementById('startBtn');
+                this.resetBtn = document.getElementById('resetBtn');
+                this.messageEl = document.getElementById('message');
+                this.scoreEl = document.getElementById('score');
+                
+                this.init();
+            }
+
+            init() {
+                this.startBtn.addEventListener('click', () => this.startGame());
+                this.resetBtn.addEventListener('click', () => this.resetGame());
+                this.buttons.forEach(button => {
+                    button.addEventListener('click', () => this.handlePlayerInput(button));
+                });
+            }
+
+            startGame() {
+                this.sequence = [];
+                this.score = 0;
+                this.scoreEl.textContent = this.score;
+                this.isPlaying = true;
+                this.startBtn.disabled = true;
+                this.nextRound();
+            }
+
+            resetGame() {
+                this.sequence = [];
+                this.playerSequence = [];
+                this.score = 0;
+                this.isPlaying = false;
+                this.scoreEl.textContent = this.score;
+                this.messageEl.textContent = 'Gioco resettato! Premi Start per iniziare una nuova partita.';
+                this.startBtn.disabled = false;
+                this.disableButtons(true);
+                this.buttons.forEach(button => {
+                    button.classList.remove('active');
+                });
+            }
+
+            async nextRound() {
+                this.sequence.push(Math.floor(Math.random() * 9));
+                this.messageEl.textContent = 'Osserva la sequenza...';
+                this.disableButtons(true);
+                
+                await this.delay(1000);
+                await this.showSequence();
+                
+                this.playerSequence = [];
+                this.messageEl.textContent = 'Il tuo turno! Ripeti la sequenza';
+                this.disableButtons(false);
+            }
+
+            async showSequence() {
+                for (let index of this.sequence) {
+                    await this.highlightButton(this.buttons[index]);
+                }
+            }
+
+            async highlightButton(button) {
+                button.classList.add('active');
+                await this.delay(600);
+                button.classList.remove('active');
+                await this.delay(200);
+            }
+
+            handlePlayerInput(button) {
+                if (!this.isPlaying) return;
+                
+                const index = parseInt(button.dataset.index);
+                this.highlightButton(button);
+                this.playerSequence.push(index);
+
+                if (this.playerSequence[this.playerSequence.length - 1] !== this.sequence[this.playerSequence.length - 1]) {
+                    this.gameOver();
+                    return;
+                }
+
+                if (this.playerSequence.length === this.sequence.length) {
+                    this.score++;
+                    this.scoreEl.textContent = this.score;
+                    this.playerSequence = [];
+                    setTimeout(() => this.nextRound(), 1000);
+                }
+            }
+
+            gameOver() {
+                this.isPlaying = false;
+                this.messageEl.textContent = `Game Over! Punteggio finale: ${this.score}`;
+                this.startBtn.disabled = false;
+                this.disableButtons(true);
+            }
+
+            disableButtons(disabled) {
+                this.buttons.forEach(button => {
+                    button.classList.toggle('disabled', disabled);
+                });
+            }
+
+            delay(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
+        }
+
+        // Inizializza il gioco
+        document.addEventListener('DOMContentLoaded', () => {
+            new MemoryGame();
+        });
+    </script>
+</body>
+</html>
