@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bottoni e Tempo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        button {
+            margin: 10px;
+            padding: 15px 25px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #output, #timeOutput {
+            margin-top: 20px;
+            font-size: 18px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        #resetButton {
+            background-color: #dc3545;
+        }
+        #resetButton:hover {
+            background-color: #c82333;
+        }
+        .time-difference {
+            margin: 5px 0;
+            padding: 5px;
+            background-color: #e9ecef;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Premi uno dei seguenti bottoni</h1>
+    
+    <div>
+        <button id="button1">Premi 1</button>
+        <button id="button2">Premi 2</button>
+        <button id="button3">Premi 3</button>
+        <button id="button4">Premi 4</button>
+        <button id="resetButton">Reset</button>
+    </div>
+
+    <div id="output"></div>
+    <div id="timeOutput"></div>
+
+    <script>
+        let timeDifferences = [];
+        let firstClickTime = null;
+        let buttonClicks = [];
+
+        function printDateTime() {
+            const now = new Date();
+            const currentTime = now.toLocaleString();
+            document.getElementById('output').innerHTML = `Data e Ora: ${currentTime}`;
+            return now.getTime();
+        }
+
+        function calculateTimeDifference(firstTime, secondTime) {
+            const diff = (secondTime - firstTime) / 1000;
+            timeDifferences.push(diff);
+            return diff;
+        }
+
+        function updateTimeOutput() {
+            const timeOutput = document.getElementById('timeOutput');
+            let html = '<h3>Differenze di tempo:</h3>';
+            
+            buttonClicks.forEach((click, index) => {
+                if (index > 0) {
+                    const timeDiff = timeDifferences[index - 1];
+                    html += `<div class="time-difference">
+                        Dal primo click al click su ${click.buttonId}: ${timeDiff.toFixed(2)} secondi
+                    </div>`;
+                } else {
+                    html += `<div class="time-difference">
+                        Primo click su: ${click.buttonId}
+                    </div>`;
+                }
+            });
+            
+            timeOutput.innerHTML = html;
+        }
+
+        function handleButtonClick(event) {
+            const currentClickTime = printDateTime();
+            const buttonId = event.target.id;
+            
+            buttonClicks.push({
+                buttonId: buttonId,
+                time: currentClickTime
+            });
+
+            if (firstClickTime === null) {
+                firstClickTime = currentClickTime;
+            } else {
+                const timeDiff = calculateTimeDifference(firstClickTime, currentClickTime);
+                console.log(`Differenza di tempo (in secondi) tra il primo e il click su ${buttonId}: ${timeDiff} s`);
+            }
+
+            updateTimeOutput();
+        }
+
+        function resetAll() {
+            timeDifferences = [];
+            firstClickTime = null;
+            buttonClicks = [];
+            document.getElementById('output').innerHTML = '';
+            document.getElementById('timeOutput').innerHTML = '';
+            console.clear();
+        }
+
+        // Event Listeners
+        document.getElementById('button1').addEventListener('click', handleButtonClick);
+        document.getElementById('button2').addEventListener('click', handleButtonClick);
+        document.getElementById('button3').addEventListener('click', handleButtonClick);
+        document.getElementById('button4').addEventListener('click', handleButtonClick);
+        document.getElementById('resetButton').addEventListener('click', resetAll);
+    </script>
+</body>
+</html>
