@@ -1,0 +1,52 @@
+<!DOCTYPE html> 
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestione Dati</title>
+</head>
+<body>
+    <h2>Dati ricevuti:</h2>
+    <p id="output"></p>
+   
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const params = new URLSearchParams(window.location.search);
+            let a = params.get("a") || "Valore non fornito";
+            let b = params.get("b") || "Valore non fornito";
+
+            // 1. Calcolare la lunghezza delle stringhe
+            let lunghezzaA = a.length;
+            let lunghezzaB = b.length;
+
+            // 2. Funzione che restituisce la stringa al contrario
+            function inverti(str) {
+                return str.split('').reverse().join('');
+            }
+
+            // 3. Funzione che unisce le due stringhe
+            function unisci(str1, str2) {
+                return str1 + str2;
+            }
+
+            // 4. Calcolare la somma delle lunghezze
+            let sommaLunghezze = lunghezzaA + lunghezzaB;
+            if (lunghezzaB > 20) {
+                sommaLunghezze = "b troppo lunga";
+            }
+
+            // Generare il messaggio di output con spazi a capo tra ogni sezione
+            let output = 
+                `Valore a: ${a} (lunghezza: ${lunghezzaA})\n\n` +
+                `Valore b: ${b} (lunghezza: ${lunghezzaB})\n\n` +
+                `Stringa a al contrario: ${inverti(a)}\n\n` +
+                `Stringa b al contrario: ${inverti(b)}\n\n` +
+                `Unione delle due stringhe: ${unisci(a, b)}\n\n` +
+                `Somma lunghezze: ${sommaLunghezze}`;
+
+            // Mostra il risultato
+            document.getElementById("output").textContent = output;
+        });
+    </script>
+</body>
+</html>
