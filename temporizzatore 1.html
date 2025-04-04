@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Div Sovrapposti</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: lightgray;
+    }
+    .container {
+      position: relative;
+      width: 500px;
+      height: 500px;
+    }
+    .div {
+      width: 100px;
+      height: 100px;
+      position: absolute;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div id="divBlu" class="div" style="background-color: blue;"></div>
+    <div id="divGiallo" class="div" style="background-color: yellow;"></div>
+  </div>
+
+  <script>
+    function randomPosition() {
+      return {
+        x: Math.random() * 400,  // Posizione casuale all'interno del contenitore (500px - 100px)
+        y: Math.random() * 400   // Stesso per l'asse Y
+      };
+    }
+
+    function overlap(div1, div2) {
+      const rect1 = div1.getBoundingClientRect();
+      const rect2 = div2.getBoundingClientRect();
+      return !(rect1.right < rect2.left || rect1.left > rect2.right || rect1.bottom < rect2.top || rect1.top > rect2.bottom);
+    }
+
+    function moveDivs() {
+      const divBlu = document.getElementById("divBlu");
+      const divGiallo = document.getElementById("divGiallo");
+
+      const posBlu = randomPosition();
+      const posGiallo = randomPosition();
+
+      divBlu.style.left = posBlu.x + 'px';
+      divBlu.style.top = posBlu.y + 'px';
+      divGiallo.style.left = posGiallo.x + 'px';
+      divGiallo.style.top = posGiallo.y + 'px';
+
+      if (overlap(divBlu, divGiallo)) {
+        divBlu.style.backgroundColor = 'red';
+        divGiallo.style.backgroundColor = 'red';
+      } else {
+        divBlu.style.backgroundColor = 'blue';
+        divGiallo.style.backgroundColor = 'yellow';
+      }
+    }
+
+    setInterval(moveDivs, 2000);
+  </script>
+</body>
+</html>
