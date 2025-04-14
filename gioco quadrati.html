@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movimento Quadrati</title>
+  <style>
+    #square {
+      width: 50px;
+      height: 50px;
+      background-color: blue;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .square {
+      width: 50px;
+      height: 50px;
+      margin: 5px;
+      display: inline-block;
+      background-color: yellow;
+    }
+
+    .red {
+      background-color: red;
+    }
+
+    #squares-container {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  </style>
+</head>
+<body>
+  <div id="square"></div>
+  <div id="squares-container"></div>
+
+  <script>
+    // Movimentazione del quadrato in senso orario
+    let x = 0, y = 0, step = 50, direction = 'east';
+    const square = document.getElementById('square');
+    
+    function moveSquare() {
+      switch (direction) {
+        case 'east': x += step; if (x >= window.innerWidth - 50) direction = 'south'; break;
+        case 'south': y += step; if (y >= window.innerHeight - 50) direction = 'west'; break;
+        case 'west': x -= step; if (x <= 0) direction = 'north'; break;
+        case 'north': y -= step; if (y <= 0) direction = 'east'; break;
+      }
+      square.style.left = `${x}px`;
+      square.style.top = `${y}px`;
+    }
+    setInterval(moveSquare, 500); // Movimento quadrato
+
+    // Creazione e movimento dei quadrati gialli con uno rosso che scorre
+    const numSquares = 8;
+    let currentRedIndex = 0;
+    const container = document.getElementById('squares-container');
+
+    // Creazione dei quadrati gialli
+    for (let i = 0; i < numSquares; i++) {
+      const sq = document.createElement('div');
+      sq.classList.add('square');
+      container.appendChild(sq);
+    }
+
+    const squares = container.getElementsByClassName('square');
+
+    function moveRedSquare() {
+      squares[currentRedIndex].classList.remove('red');
+      currentRedIndex = (currentRedIndex + 1) % numSquares; // Ciclo indici
+      squares[currentRedIndex].classList.add('red');
+    }
+    setInterval(moveRedSquare, 500); // Movimento quadrato rosso
+  </script>
+</body>
+</html>
