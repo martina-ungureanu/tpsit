@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Numeri Casuali - Modificato con Grafico</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+    #output {
+      margin-top: 20px;
+      max-height: 300px;
+      overflow-y: auto;
+      border: 1px solid #ccc;
+      padding: 10px;
+      white-space: pre-wrap;
+    }
+    #grafico {
+      max-width: 800px;
+      margin: 30px auto;
+    }
+  </style>
+</head>
+<body>
+  <h1>Generatore di Numeri Casuali Modificato</h1>
+  <label for="min">Min:</label>
+  <input type="number" id="min" value="0" step="any">
+  <label for="max">Max:</label>
+  <input type="number" id="max" value="1" step="any">
+  <button onclick="avviaGenerazione()">Avvia</button>
+
+  <div id="output"></div>
+
+  <!-- Canvas per il grafico -->
+  <div id="grafico">
+    <canvas id="graficoNumeri" height="300"></canvas>
+  </div>
+
+  <script>
+    let numeri = [];
+    let rapporti = [];
+    let medie = [];
+    let distanze = [];
+    let intervallo;
+    let conta = 0;
+    let chart;
+
+    function avviaGenerazione() {
+      const min = parseFloat(document.getElementById('min').value);
+      const max = parseFloat(document.getElementById('max').value);
+      const output = document.getElementById('output');
+
+      if (isNaN(min) || isNaN(max) || min >= max) {
+        alert("Inserisci un intervallo valido.");
+        return;
+      }
+
+      numeri = [];
+      rapporti = [];
+      medie = [];
+      distanze = [];
+      conta = 0;
+      output.textContent = "";
+
+      const metàRange = (max - min) / 2;
+
+      // Inizializza o resetta il grafico
+      if (chart) chart.destroy();
+      const ctx = document.getElementById('graficoNumeri').getContext('2d');
+      chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: [],
+          datasets: [
+            {
+              label: 'Numeri Casuali',
+              data: [],
+              borderColor: 'blue',
+              borderWidth: 1.5,
+              fill: false,
+              pointRadius: 0
+            },
+            {
+              label: 'Media (ogni 50)',
+              data: [],
+              borderColor: 'red',
+              borderWidth: 1.5,
+              fill: false,
+              pointRadius: 3,
+              showLine: false
+            }
+          ]
+        },
+        options: {
+          animation: false,
+          scales: {
+            y: {
+              min: min,
+              max: max
+            }
+          }
+        }
+      });
+
+      intervallo = setInterval(() => {
+        let n = Math.random() * (max - min) + min;
+        numeri.push(n);
+        conta++;
+
+        if (numeri.length > 1) {
+          let rapporto = n / numeri[numeri.length - 2];
+          rapporti.push(rapporto);
+        }
+
+        let distanza = Math.abs(n - metàRange);
+        distanze.push(distanza);
+
+        // Aggiorna grafico
+        chart.data.labels.push(conta);
+        chart.data.datasets[0].data.push(n);
+
+        // Ogni 50: calcola media
+        if (conta % 50 === 0) {
+          const ultimi50 = numeri.slice(-50);
+          const media = calcolaMedia(ultimi50);
+          medie.push(media);
+
+          output.textContent += `${ultimi50.map(x => x.toFixed(3)).join(' ')} | Media: ${media.toFixed(3)}\n`;
+
+          chart.data.datasets[1].data.push({
+            x: conta,
+            y: media
+          });
+        }
+
+        chart.update();
+
+        if (conta >= 1000) {
+          clearInterval(intervallo);
+          console.log("Generazione completata.");
+          console.log("Numeri:", numeri);
+          console.log("Rapporti:", rapporti);
+          console.log("Medie:", medie);
+          console.log("Distanze:", distanze);
+        }
+      }, 500);
+    }
+
+    function calcolaMedia(arr) {
+      return arr.reduce((a, b) => a + b, 0) / arr.length;
+    }
+  </script>
+</body>
+</html>
