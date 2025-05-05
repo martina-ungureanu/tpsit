@@ -79,25 +79,26 @@
 </head>
 <body>
 
-  <!-- INTERFACCIA UTENTE -->
+  <!-- INTERFACCIA GIOCO -->
   <h1>Whack A-Mole</h1>
   <h2>Fai più punti possibili nel minor tempo!</h2>
   <div id="score">Punteggio: 0</div>
+  <div id="timer">Tempo: 60s</div>
   <div id="game-board"></div>
   <button id="start-btn">Inizia Gioco</button>
-  <button id="end-btn">Termina Gioco</button>
   <button id="reset-btn">Resetta Gioco</button>
   <div id="hammer"></div>
 
   <script>
-    // VARIABILI PRINCIPALI
     const scoreEl = document.getElementById('score');
+    const timerEl = document.getElementById('timer');
     const gameBoard = document.getElementById('game-board');
     const hammer = document.getElementById('hammer');
     const startBtn = document.getElementById('start-btn');
-    let score = 0, moleInterval, gameTimer;
+    let score = 0, moleInterval, countdownInterval;
+    let timeLeft = 60;
 
-    // CREA LA GRIGLIA DI GIOCO (9 buche con tassi nascosti)
+    // CREA LA GRIGLIA 3x3 CON I TASSI
     for (let i = 0; i < 9; i++) {
       const hole = document.createElement('div');
       hole.className = 'hole';
@@ -107,62 +108,71 @@
       gameBoard.appendChild(hole);
     }
 
-    // MOSTRA UN TASSO CASUALE PER 1 SECONDO
+    // MOSTRA UN TASSO CASUALE PER 1s
     function showMole() {
       const moles = document.querySelectorAll('.mole');
-      moles.forEach(m => m.style.display = 'none'); // Nasconde tutti
+      moles.forEach(m => m.style.display = 'none');
       const mole = moles[Math.floor(Math.random() * moles.length)];
-      mole.style.display = 'block'; // Ne mostra uno
-      setTimeout(() => mole.style.display = 'none', 1000); // Nasconde dopo 1s
+      mole.style.display = 'block';
+      setTimeout(() => mole.style.display = 'none', 1000);
     }
 
-    // AGGIORNA IL PUNTEGGIO QUANDO SI CLICCA SU UN TASSO
+    // GESTISCE IL CLICK SUL TASSO
     gameBoard.addEventListener('click', e => {
       if (e.target.classList.contains('mole') && e.target.style.display === 'block') {
         score += 10;
         scoreEl.textContent = `Punteggio: ${score}`;
-        e.target.style.display = 'none'; // Nasconde il tasso colpito
+        e.target.style.display = 'none';
       }
     });
 
-    // FA SEGUIRE IL MARTELLO AL MOVIMENTO DEL MOUSE
+    // IL MARTELLO SEGUE IL CURSORE
     document.addEventListener('mousemove', e => {
       hammer.style.left = `${e.clientX - 50}px`;
       hammer.style.top = `${e.clientY - 50}px`;
     });
 
-    // AVVIA IL GIOCO: mostra tassi e avvia timer
+    // AVVIA IL GIOCO: RESETTA PUNTEGGIO, AVVIA INTERVALLI, TIMER
     function startGame() {
       score = 0;
+      timeLeft = 30;
       scoreEl.textContent = 'Punteggio: 0';
+      timerEl.textContent = 'Tempo: 30s';
       hammer.style.display = 'block';
       startBtn.disabled = true;
-      moleInterval = setInterval(showMole, 500); // Tasso ogni 0.5s
-      gameTimer = setTimeout(endGame, 30000);    // Durata 30s
+
+      moleInterval = setInterval(showMole, 500); // ogni 0.5s
+      countdownInterval = setInterval(() => {
+        timeLeft--;
+        timerEl.textContent = `Tempo: ${timeLeft}s`;
+
+        if (timeLeft <= 0) endGame();
+      }, 1000);
     }
 
-    // TERMINA IL GIOCO: blocca intervalli e mostra punteggio
+    // TERMINA IL GIOCO: STOP INTERVALLI, MOSTRA FINE PARTITA
     function endGame() {
       clearInterval(moleInterval);
-      clearTimeout(gameTimer);
+      clearInterval(countdownInterval);
       hammer.style.display = 'none';
       startBtn.disabled = false;
       alert(`Tempo scaduto! Punteggio finale: ${score}`);
     }
 
-    // RESETTA IL GIOCO A STATO INIZIALE
+    // RESETTA IL GIOCO
     function resetGame() {
       clearInterval(moleInterval);
-      clearTimeout(gameTimer);
+      clearInterval(countdownInterval);
       score = 0;
+      timeLeft = 30;
       scoreEl.textContent = 'Punteggio: 0';
+      timerEl.textContent = 'Tempo: 30s';
       hammer.style.display = 'none';
       startBtn.disabled = false;
     }
 
-    // COLLEGA I BOTTONI ALLE FUNZIONI
-    document.getElementById('start-btn').addEventListener('click', startGame);
-    document.getElementById('end-btn').addEventListener('click', endGame);
+    // EVENTI DEI BOTTONI
+    startBtn.addEventListener('click', startGame);
     document.getElementById('reset-btn').addEventListener('click', resetGame);
   </script>
 
