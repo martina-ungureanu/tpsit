@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>STEAM Who?</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #3a1c71, #d76d77, #ffaf7b);
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    #container {
+      padding: 30px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    header h1 {
+      font-size: 3em;
+      color: #ffffff;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 4px #000000;
+    }
+
+    header p {
+      font-size: 1.2em;
+      color: #f0f0f0;
+      margin-bottom: 30px;
+      text-shadow: 1px 1px 2px #000000;
+    }
+
+    #selection-box {
+      background-color: #ffffffdd;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+      margin-bottom: 20px;
+    }
+
+    #characters-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 20px;
+      margin-top: 15px;
+    }
+
+    .character-img {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 10px;
+      border: 4px solid #ffffff;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+
+    .character-img:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+    }
+
+    #question-box {
+      background-color: #ffffffdd;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+    }
+
+    #question {
+      font-size: 1.6em;
+      margin-bottom: 20px;
+      color: #2c3e50;
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .answer-btn {
+      background-color: #8e44ad;
+      color: white;
+      border: none;
+      padding: 14px 32px;
+      font-size: 1.1em;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+
+    .answer-btn:hover {
+      background-color: #732d91;
+      transform: scale(1.05);
+    }
+
+    #result-container {
+      margin-top: 30px;
+      background-color: #ffffffdd;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+    }
+
+    #result {
+      font-size: 1.6em;
+      color: #2c3e50;
+      margin-bottom: 20px;
+    }
+
+    #result-image {
+      border-radius: 12px;
+      width: 200px;
+      height: 200px;
+      object-fit: cover;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <header>
+      <h1>STEAM Who?</h1>
+      <p>Seleziona un personaggio tra quelli mostrati, poi il sistema cercherà di indovinarlo facendoti alcune domande.</p>
+    </header>
+
+    <div id="selection-box">
+      <p>Scegli il tuo personaggio:</p>
+      <div id="characters-container"></div>
+    </div>
+
+    <div id="question-box" style="display:none;">
+      <p id="question"></p>
+      <div class="button-container">
+        <button class="answer-btn" onclick="answer(true)">Sì</button>
+        <button class="answer-btn" onclick="answer(false)">No</button>
+      </div>
+    </div>
+
+    <div id="result-container" style="display:none;">
+      <p id="result"></p>
+      <img id="result-image" src="" alt="Immagine personaggio" style="display: none;">
+    </div>
+  </div>
+
+  <script>
+    const characters = [
+      { name: "Albert Einstein", woman: false, alive: false, scientist: true, field: "fisica", nobel: true, image: "img/einstein.jpg" },
+      { name: "Marie Curie", woman: true, alive: false, scientist: true, field: "chimica", nobel: true, image: "img/marie_curie.jpg" },
+      { name: "Ada Lovelace", woman: true, alive: false, scientist: true, field: "informatica", nobel: false, image: "img/ada_lovelace.jpg" },
+      { name: "Alan Turing", woman: false, alive: false, scientist: true, field: "informatica", nobel: false, image: "img/alan_turing.jpg" },
+      { name: "Katherine Johnson", woman: true, alive: false, scientist: true, field: "matematica", nobel: false, image: "img/katherine_johnson.jpg" },
+      { name: "Elon Musk", woman: false, alive: true, scientist: false, field: "tecnologia", nobel: false, image: "img/elon_musk.jpg" },
+      { name: "Tim Berners-Lee", woman: false, alive: true, scientist: true, field: "informatica", nobel: false, image: "img/tim_berners_lee.jpg" },
+      { name: "Margaret Hamilton", woman: true, alive: true, scientist: true, field: "informatica", nobel: false, image: "img/margaret_hamilton.jpg" },
+      { name: "Galileo Galilei", woman: false, alive: false, scientist: true, field: "astronomia", nobel: false, image: "img/galileo_galilei.jpg" },
+      { name: "Stephen Hawking", woman: false, alive: false, scientist: true, field: "fisica", nobel: false, image: "img/stephen_hawking.jpg" }
+    ];
+
+    const questions = [
+      { text: "È una donna?", key: "woman" },
+      { text: "È ancora in vita?", key: "alive" },
+      { text: "Ha vinto un premio Nobel?", key: "nobel" },
+      { text: "È un/a scienziato/a?", key: "scientist" },
+      { text: "Opera nel campo della fisica?", key: "field", value: "fisica" },
+      { text: "Opera nel campo dell'informatica?", key: "field", value: "informatica" },
+      { text: "Opera nel campo della chimica?", key: "field", value: "chimica" },
+      { text: "Opera nel campo della matematica?", key: "field", value: "matematica" },
+      { text: "Opera nel campo della tecnologia?", key: "field", value: "tecnologia" },
+      { text: "Opera nel campo dell'astronomia?", key: "field", value: "astronomia" }
+    ];
+
+    let selectedCharacter = null;
+    let currentQuestion = 0;
+    let filteredCharacters = [...characters];
+
+    function displayCharacterSelection() {
+      const container = document.getElementById('characters-container');
+      characters.forEach(character => {
+        const img = document.createElement('img');
+        img.src = character.image;
+        img.alt = character.name;
+        img.classList.add('character-img');
+        img.onclick = () => selectCharacter(character);
+        container.appendChild(img);
+      });
+    }
+
+    function selectCharacter(character) {
+      selectedCharacter = character;
+      document.getElementById('selection-box').style.display = 'none';
+      document.getElementById('question-box').style.display = 'block';
+      filteredCharacters = [character];
+      showQuestion();
+    }
+
+    function showQuestion() {
+      if (currentQuestion < questions.length) {
+        document.getElementById("question").textContent = questions[currentQuestion].text;
+      } else {
+        displayResult();
+      }
+    }
+
+    function answer(isYes) {
+      const q = questions[currentQuestion];
+      filteredCharacters = filteredCharacters.filter(c => {
+        return isYes ? c[q.key] === (q.value ?? true) : c[q.key] !== (q.value ?? true);
+      });
+      currentQuestion++;
+      showQuestion();
+    }
+
+    function displayResult() {
+      document.getElementById("question-box").style.display = "none";
+      const result = document.getElementById("result");
+      const resultImage = document.getElementById("result-image");
+
+      if (filteredCharacters.length === 1) {
+        result.textContent = "Il tuo personaggio è: " + filteredCharacters[0].name;
+        resultImage.src = filteredCharacters[0].image;
+        resultImage.style.display = "block";
+      } else if (filteredCharacters.length > 1) {
+        result.textContent = "Potrebbero essere: " + filteredCharacters.map(c => c.name).join(", ");
+        resultImage.style.display = "none";
+      } else {
+        result.textContent = "Non riesco a indovinare. Nessuna corrispondenza trovata.";
+        resultImage.style.display = "none";
+      }
+
+      document.getElementById("result-container").style.display = "block";
+    }
+
+    displayCharacterSelection();
+  </script>
+</body>
+</html>
