@@ -82,9 +82,10 @@
       display: flex;
       justify-content: center;
       gap: 20px;
+      flex-wrap: wrap;
     }
 
-    .answer-btn {
+    .answer-btn, .retry-btn {
       background-color: #8e44ad;
       color: white;
       border: none;
@@ -95,7 +96,7 @@
       transition: background-color 0.3s, transform 0.2s;
     }
 
-    .answer-btn:hover {
+    .answer-btn:hover, .retry-btn:hover {
       background-color: #732d91;
       transform: scale(1.05);
     }
@@ -146,21 +147,24 @@
     <div id="result-container" style="display:none;">
       <p id="result"></p>
       <img id="result-image" src="" alt="Immagine personaggio" style="display: none;">
+      <div class="button-container">
+        <button class="retry-btn" onclick="restartGame()">Rigioca</button>
+      </div>
     </div>
   </div>
 
   <script>
     const characters = [
-      { name: "Albert Einstein", woman: false, alive: false, scientist: true, field: "fisica", nobel: true, image: "img/einstein.jpg" },
-      { name: "Marie Curie", woman: true, alive: false, scientist: true, field: "chimica", nobel: true, image: "img/marie_curie.jpg" },
-      { name: "Ada Lovelace", woman: true, alive: false, scientist: true, field: "informatica", nobel: false, image: "img/ada_lovelace.jpg" },
-      { name: "Alan Turing", woman: false, alive: false, scientist: true, field: "informatica", nobel: false, image: "img/alan_turing.jpg" },
-      { name: "Katherine Johnson", woman: true, alive: false, scientist: true, field: "matematica", nobel: false, image: "img/katherine_johnson.jpg" },
-      { name: "Elon Musk", woman: false, alive: true, scientist: false, field: "tecnologia", nobel: false, image: "img/elon_musk.jpg" },
-      { name: "Tim Berners-Lee", woman: false, alive: true, scientist: true, field: "informatica", nobel: false, image: "img/tim_berners_lee.jpg" },
-      { name: "Margaret Hamilton", woman: true, alive: true, scientist: true, field: "informatica", nobel: false, image: "img/margaret_hamilton.jpg" },
-      { name: "Galileo Galilei", woman: false, alive: false, scientist: true, field: "astronomia", nobel: false, image: "img/galileo_galilei.jpg" },
-      { name: "Stephen Hawking", woman: false, alive: false, scientist: true, field: "fisica", nobel: false, image: "img/stephen_hawking.jpg" }
+      { name: "Albert Einstein", woman: false, alive: false, scientist: true, field: "fisica", nobel: true, image: "images/einstein.jpg" },
+      { name: "Marie Curie", woman: true, alive: false, scientist: true, field: "chimica", nobel: true, image: "images/marie_curie.jpg" },
+      { name: "Ada Lovelace", woman: true, alive: false, scientist: true, field: "informatica", nobel: false, image: "images/ada_lovelace.jpg" },
+      { name: "Alan Turing", woman: false, alive: false, scientist: true, field: "informatica", nobel: false, image: "images/alan_turing.jpg" },
+      { name: "Katherine Johnson", woman: true, alive: false, scientist: true, field: "matematica", nobel: false, image: "images/katherine_johnson.jpg" },
+      { name: "Elon Musk", woman: false, alive: true, scientist: false, field: "tecnologia", nobel: false, image: "images/elon_musk.jpg" },
+      { name: "Tim Berners-Lee", woman: false, alive: true, scientist: true, field: "informatica", nobel: false, image: "images/tim_berners_lee.jpg" },
+      { name: "Margaret Hamilton", woman: true, alive: true, scientist: true, field: "informatica", nobel: false, image: "images/margaret_hamilton.jpg" },
+      { name: "Galileo Galilei", woman: false, alive: false, scientist: true, field: "astronomia", nobel: false, image: "images/galileo_galilei.jpg" },
+      { name: "Stephen Hawking", woman: false, alive: false, scientist: true, field: "fisica", nobel: false, image: "images/stephen_hawking.jpg" }
     ];
 
     const questions = [
@@ -197,6 +201,7 @@
       document.getElementById('selection-box').style.display = 'none';
       document.getElementById('question-box').style.display = 'block';
       filteredCharacters = [character];
+      currentQuestion = 0;
       showQuestion();
     }
 
@@ -235,6 +240,10 @@
       }
 
       document.getElementById("result-container").style.display = "block";
+    }
+
+    function restartGame() {
+      location.reload();
     }
 
     displayCharacterSelection();
