@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Gioco del Colore</title>
+  <style>
+    body { text-align: center; font-family: sans-serif; padding-top: 50px; }
+    button { font-size: 18px; padding: 10px 20px; margin: 5px; cursor: pointer; }
+    #colorButton { width: 120px; height: 120px; margin-top: 20px; font-size: 16px; }
+  </style>
+</head>
+<body>
+
+  <h1>Clicca il Colore Giusto!</h1>
+  <p>Scegli un colore:</p>
+
+  <!-- Bottoni per scegliere il colore -->
+  <button onclick="scegliColore('red')" style="background-color:red">Rosso</button>
+  <button onclick="scegliColore('green')" style="background-color:green">Verde</button>
+  <button onclick="scegliColore('blue')" style="background-color:blue">Blu</button>
+
+  <h2 id="coloreScelto"></h2>
+
+  <!-- Bottone del gioco -->
+  <button id="colorButton" onclick="cliccato()" style="display:none;"></button>
+
+  <h3>Tempi di reazione:</h3>
+  <ul id="tempi"></ul>
+
+  <script>
+    let coloreGiusto = "";          // Il colore che l'utente deve cliccare
+    let tempoInizio = 0;            // Quando il colore giusto è apparso
+    let tempi = [];                 // Array che salva i tempi
+    let intervallo;                 // ID del setInterval
+    const colori = ["red", "green", "blue"];
+
+    function scegliColore(colore) {
+      coloreGiusto = colore;
+      document.getElementById("coloreScelto").innerText = "Devi cliccare: " + colore;
+      document.getElementById("colorButton").style.display = "inline-block";
+
+      // Inizia a cambiare colore ogni secondo
+      intervallo = setInterval(() => {
+        let coloreCasuale = colori[Math.floor(Math.random() * colori.length)];
+        let bottone = document.getElementById("colorButton");
+        bottone.style.backgroundColor = coloreCasuale;
+
+        // Se è il colore giusto, salva il tempo di inizio
+        if (coloreCasuale === coloreGiusto) {
+          tempoInizio = Date.now();
+        } else {
+          tempoInizio = 0; // Ignora clic su colori sbagliati
+        }
+      }, 1000);
+    }
+
+    function cliccato() {
+      // Se il colore è giusto e il tempo è stato salvato
+      if (tempoInizio > 0) {
+        let tempoFine = Date.now();
+        let tempoReazione = tempoFine - tempoInizio;
+        tempi.push(tempoReazione);
+
+        // Aggiungi alla lista
+        let li = document.createElement("li");
+        li.innerText = tempoReazione + " ms";
+        document.getElementById("tempi").appendChild(li);
+
+        tempoInizio = 0; // Impedisce doppio clic
+      }
+    }
+  </script>
+</body>
+</html>
