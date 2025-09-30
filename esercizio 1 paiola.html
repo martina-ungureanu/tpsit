@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Profilo e Prodotti - Vue App</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f6f8;
+      color: #333;
+      margin: 0;
+      padding: 40px;
+    }
+
+    #app {
+      max-width: 700px;
+      margin: auto;
+      background: white;
+      padding: 30px 40px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      border-bottom: 2px solid #007BFF;
+      padding-bottom: 5px;
+      margin-top: 30px;
+      color: #007BFF;
+    }
+
+    p {
+      font-size: 1.1em;
+      margin: 8px 0;
+    }
+
+    .product {
+      background-color: #f0f8ff;
+      padding: 12px 18px;
+      border-radius: 6px;
+      margin-top: 10px;
+      font-weight: 500;
+    }
+
+    .button-section {
+      margin-top: 10px;
+    }
+
+    button {
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1em;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover:enabled {
+      background-color: #0056b3;
+    }
+
+    button[disabled] {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+
+    .switch-container {
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 25px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0;
+      right: 0; bottom: 0;
+      background-color: #ccc;
+      border-radius: 34px;
+      transition: .4s;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 4px;
+      bottom: 3.5px;
+      background-color: white;
+      border-radius: 50%;
+      transition: .4s;
+    }
+
+    input:checked + .slider {
+      background-color: #007BFF;
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(24px);
+    }
+
+    .tooltip-section p {
+      cursor: help;
+      background-color: #e7f0fa;
+      padding: 10px;
+      border-radius: 6px;
+      transition: background-color 0.3s ease;
+    }
+
+    .tooltip-section p:hover {
+      background-color: #d0e8ff;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 8px 12px;
+      margin-top: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1em;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div id="app">
+    <!-- 1) Profilo Utente -->
+    <h2>Profilo Utente</h2>
+    <p><strong>Nome:</strong> {{ nome }}</p>
+    <p><strong>Cognome:</strong> {{ cognome }}</p>
+    <p><strong>Città:</strong> {{ citta }}</p>
+
+    <!-- 2) Dettagli Prodotto -->
+    <h2>Dettagli Prodotto</h2>
+    <div class="product">
+      Il prodotto <strong>{{ nomeProdotto }}</strong> costa <strong>{{ prezzo.toFixed(2) }} €</strong>.
+    </div>
+
+    <!-- 3) Immagine Disattivata -->
+    <h2>Controllo Pulsante Immagine</h2>
+    <div class="button-section">
+      <button :disabled="immagineDisabilitata">Carica Immagine</button>
+    </div>
+    <div class="switch-container">
+      <label class="switch">
+        <input type="checkbox" v-model="immagineDisabilitata">
+        <span class="slider"></span>
+      </label>
+      <span>{{ immagineDisabilitata ? 'Pulsante disabilitato' : 'Pulsante attivo' }}</span>
+    </div>
+
+    <!-- 4) Tooltip Dinamico -->
+    <h2>Tooltip Dinamico</h2>
+    <div class="tooltip-section">
+      <p :title="messaggioTooltip">
+        Passa il mouse qui per vedere il tooltip.
+      </p>
+      <input type="text" v-model="messaggioTooltip" placeholder="Scrivi un nuovo messaggio tooltip...">
+    </div>
+  </div>
+
+  <script>
+    const { createApp } = Vue;
+
+    createApp({
+      data() {
+        return {
+          // 1) Profilo Utente
+          nome: 'Martina',
+          cognome: 'Ungureanu',
+          citta: 'Torino',
+
+          // 2) Dettagli Prodotto
+          nomeProdotto: 'Iphone X26',
+          prezzo: 4080.99,
+
+          // 3) Immagine Disattivata
+          immagineDisabilitata: false,
+
+          // 4) Tooltip Dinamico
+          messaggioTooltip: 'Questo è un tooltip dinamico!'
+        };
+      }
+    }).mount('#app');
+  </script>
+
+</body>
+</html>
