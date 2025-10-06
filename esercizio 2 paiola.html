@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard Semplificata</title>
+    <style>
+        /* Stile Generale e Grid Layout */
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 30px; background-color: #f4f7fa; color: #333; }
+        .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 25px; }
+        .component-box { background-color: #ffffff; border: 1px solid #e0e0e0; padding: 20px; border-radius: 12px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); }
+        h2 { color: #1a73e8; border-bottom: 2px solid #e0e0e0; padding-bottom: 10px; margin-top: 0; font-weight: 600; }
+        h3 { font-weight: 400; margin-top: 5px; margin-bottom: 15px; }
+
+        /* Bottoni */
+        button { padding: 10px 18px; margin: 5px 5px 5px 0; cursor: pointer; border: none; border-radius: 6px; font-size: 14px; font-weight: 500; }
+        .login-box button { width: 150px; }
+        .traffic-light-buttons { display: flex; gap: 10px; margin-top: 15px; }
+        #loginButton[data-state="logged-out"] { background-color: #4CAF50; color: white; }
+        #loginButton[data-state="logged-in"] { background-color: #f44336; color: white; }
+        .traffic-light-buttons button:nth-child(1) { background-color: #f44336; color: white; }
+        .traffic-light-buttons button:nth-child(2) { background-color: #ffeb3b; color: #333; }
+        .traffic-light-buttons button:nth-child(3) { background-color: #4CAF50; color: white; }
+
+        /* Semaforo */
+        .traffic-light-status { display: flex; justify-content: center; align-items: center; height: 100px; border-radius: 8px; margin-bottom: 20px; font-size: 20px; font-weight: bold; color: white; text-shadow: 0 1px 2px rgba(0,0,0,0.5); }
+        .traffic-light-status[data-color="rosso"] { background-color: #f44336; }
+        .traffic-light-status[data-color="giallo"] { background-color: #ffeb3b; color: #333; text-shadow: none; }
+        .traffic-light-status[data-color="verde"] { background-color: #4CAF50; }
+        
+        /* Classifica */
+        ol { padding-left: 20px; line-height: 1.8; }
+        li { font-size: 16px; border-bottom: 1px dashed #eee; padding: 5px 0; }
+        
+        /* Catalogo */
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 14px; }
+        th, td { border: 1px solid #e0e0e0; padding: 12px; text-align: left; }
+        th { background-color: #f8f8f8; font-weight: 600; color: #555; }
+        td:nth-child(3) { font-weight: bold; color: #1a73e8; }
+    </style>
+</head>
+<body>
+
+    <h1>Dashboard di Esempio Interattiva</h1>
+    <div class="dashboard-grid">
+
+        <div class="component-box login-box">
+            <h2>1. Stato Utente</h2>
+            <h3 id="userMessage"></h3>
+            <button id="loginButton" onclick="toggleLogin()"></button>
+        </div>
+
+        <div class="component-box traffic-light-box">
+            <h2>2. Semaforo</h2>
+            <div id="trafficLightStatus" class="traffic-light-status" data-color="rosso"></div>
+            <div class="traffic-light-buttons">
+                <button onclick="setTrafficLight('rosso')">Stop (Rosso)</button>
+                <button onclick="setTrafficLight('giallo')">Attenzione (Giallo)</button>
+                <button onclick="setTrafficLight('verde')">Vai! (Verde)</button>
+            </div>
+        </div>
+
+        <div class="component-box ranking-box">
+            <h2>3. Classifica Squadre</h2>
+            <div id="rankingListContainer"></div>
+        </div>
+
+        <div class="component-box catalog-box">
+            <h2>4. Catalogo Prodotti</h2>
+            <div id="productTableContainer"></div>
+        </div>
+    </div>
+
+    <script>
+        // --- PROPRIETÀ GLOBALI ---
+        let isLoggedIn = false;
+        let coloreSemaforo = 'rosso';
+        
+        const favoriteTeams = ["Real Madrid ⚽", "Golden State Warriors 🏀", "Scuderia Ferrari 🏎️"];
+
+        const products = [
+            { id: 101, nome: "Smartwatch Alpha X", prezzo: 199.99 },
+            { id: 102, nome: "Cuffie Wireless Pro", prezzo: 79.50 },
+            { id: 103, nome: "Mouse Ergonomico", prezzo: 24.90 }
+        ];
+
+        // ===================================
+        // 1. LOGICA LOGIN UTENTE
+        // ===================================
+        function updateLoginUI() {
+            const state = isLoggedIn ? 'logged-in' : 'logged-out';
+            const msg = isLoggedIn ? "Benvenuto, Utente! Pronti a lavorare. 💼" : "Per favore, accedi per visualizzare i tuoi dati.";
+            const btnText = isLoggedIn ? "Esci (Logout)" : "Accedi";
+            
+            document.getElementById('userMessage').textContent = msg;
+            document.getElementById('loginButton').textContent = btnText;
+            document.getElementById('loginButton').setAttribute('data-state', state);
+        }
+
+        function toggleLogin() {
+            isLoggedIn = !isLoggedIn; 
+            updateLoginUI();
+        }
+
+        // ===================================
+        // 2. LOGICA SEMAFORO (Più concisa)
+        // ===================================
+        function updateTrafficLightUI() {
+            const statusDiv = document.getElementById('trafficLightStatus');
+            const messages = {
+                'rosso': "STOP! La strada è bloccata.",
+                'giallo': "ATTENZIONE! Prepararsi al cambio.",
+                'verde': "VAI! Via libera."
+            };
+            
+            statusDiv.setAttribute('data-color', coloreSemaforo);
+            statusDiv.textContent = messages[coloreSemaforo];
+        }
+
+        function setTrafficLight(nuovoColore) {
+            coloreSemaforo = nuovoColore;
+            updateTrafficLightUI();
+        }
+
+        // ===================================
+        // 3. LOGICA CLASSIFICA (Uso di Map/Join per efficienza)
+        // ===================================
+        function renderRanking() {
+            const listItems = favoriteTeams.map(team => `<li>${team}</li>`).join('');
+            document.getElementById('rankingListContainer').innerHTML = `<ol>${listItems}</ol>`;
+        }
+
+        // ===================================
+        // 4. LOGICA CATALOGO PRODOTTI (Uso di template string)
+        // ===================================
+        function renderProductCatalog() {
+            const tableRows = products.map(product => `
+                <tr>
+                    <td>${product.id}</td>
+                    <td>${product.nome}</td>
+                    <td>€ ${product.prezzo.toFixed(2)}</td>
+                </tr>
+            `).join('');
+
+            const tableHTML = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome Prodotto</th>
+                            <th>Prezzo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${tableRows}
+                    </tbody>
+                </table>`;
+            
+            document.getElementById('productTableContainer').innerHTML = tableHTML;
+        }
+
+        // --- ESECUZIONE INIZIALE ---
+        document.addEventListener('DOMContentLoaded', () => {
+            updateLoginUI();
+            updateTrafficLightUI();
+            renderRanking();
+            renderProductCatalog();
+        });
+
+    </script>
+</body>
+</html>
