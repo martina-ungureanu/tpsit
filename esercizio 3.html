@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vue 3 Esempio Completo</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: auto; }
+    section { margin-bottom: 30px; }
+    label { display: block; margin-top: 10px; }
+    fieldset { margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <!-- 1. Cambia Messaggio -->
+    <section>
+      <h2>1. Cambia Messaggio</h2>
+      <p>{{ messaggio }}</p>
+      <button @click="cambiaMessaggio">Cambia messaggio</button>
+    </section>
+    <hr />
+
+    <!-- 2. Accendi/Spegni -->
+    <section>
+      <h2>2. Accendi/Spegni</h2>
+      <button @click="toggleLuce">Toggle Luce</button>
+      <p>La luce è {{ luceAccesa ? 'accesa' : 'spenta' }}</p>
+    </section>
+    <hr />
+
+    <!-- 3. Convertitore di Unità Semplice -->
+    <section>
+      <h2>3. Convertitore di Unità Semplice</h2>
+      <label>
+        Inserisci chilogrammi:
+        <input type="number" v-model.number="chilogrammi" />
+      </label>
+      <p>{{ chilogrammi }} kg = {{ grammi }} grammi</p>
+    </section>
+    <hr />
+
+    <!-- 4. Form di Registrazione Semplice -->
+    <section>
+      <h2>4. Form di Registrazione Semplice</h2>
+      <form @submit.prevent>
+        <label>
+          Nome:
+          <input type="text" v-model="nome" />
+        </label>
+
+        <fieldset>
+          <legend>Genere:</legend>
+          <label><input type="radio" value="Uomo" v-model="genere" /> Uomo</label>
+          <label><input type="radio" value="Donna" v-model="genere" /> Donna</label>
+          <label><input type="radio" value="Altro" v-model="genere" /> Altro</label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Paese:</legend>
+          <label><input type="radio" value="Italia" v-model="paese" /> Italia</label>
+          <label><input type="radio" value="Germania" v-model="paese" /> Germania</label>
+          <label><input type="radio" value="Francia" v-model="paese" /> Francia</label>
+        </fieldset>
+      </form>
+
+      <h3>Riepilogo dati inseriti:</h3>
+      <p>Nome: {{ nome || '-' }}</p>
+      <p>Genere: {{ genere || '-' }}</p>
+      <p>Paese: {{ paese || '-' }}</p>
+    </section>
+  </div>
+
+  <script>
+    const { createApp } = Vue;
+
+    createApp({
+      data() {
+        return {
+          messaggio: "Clicca il bottone per cambiare questo messaggio",
+          luceAccesa: false,
+          chilogrammi: 0,
+          nome: "",
+          genere: "",
+          paese: "",
+        };
+      },
+      computed: {
+        grammi() {
+          return this.chilogrammi * 1000;
+        }
+      },
+      methods: {
+        cambiaMessaggio() {
+          this.messaggio = "Hai cliccato il bottone!";
+        },
+        toggleLuce() {
+          this.luceAccesa = !this.luceAccesa;
+        }
+      }
+    }).mount('#app');
+  </script>
+</body>
+</html>
