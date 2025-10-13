@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Simulatore Scheduling CPU</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f4f4f4;
+    }
+    h1 {
+      color: #333;
+    }
+    pre {
+      background: #fff;
+      padding: 15px;
+      border: 1px solid #ccc;
+      overflow: auto;
+    }
+    .section {
+      margin-bottom: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Simulatore Algoritmi di Scheduling CPU</h1>
+  <div id="output"></div>
+
+  <script>
+    const tasks = [
+      { id: "P1", arrival: 0, burst: 20, priority: 2 },
+      { id: "P2", arrival: 8, burst: 5, priority: 1 },
+      { id: "P3", arrival: 3, burst: 12, priority: 4 },
+      { id: "P4", arrival: 10, burst: 6, priority: 3 },
+      { id: "P5", arrival: 7, burst: 8, priority: 2 }
+    ];
+
+    function fcfs(tasks) {
+      const sorted = [...tasks].sort((a, b) => a.arrival - b.arrival);
+      let time = 0;
+      const schedule = [];
+      let totalWaiting = 0, totalTurnaround = 0;
+
+      for (let t of sorted) {
+        const start = Math.max(time, t.arrival);
+        const end = start + t.burst;
+        const waiting = start - t.arrival;
+        const turnaround = end - t.arrival;
+        schedule.push({ id: t.id, start, end });
+        totalWaiting += waiting;
+        totalTurnaround += turnaround;
+        time = end;
+      }
+
+      return {
+        algorithm: "FCFS",
+        schedule,
+        averageWaitingTime: totalWaiting / tasks.length,
+        averageTurnaroundTime: totalTurnaround / tasks.length
+      };
+    }
+
+    function sjf(tasks) {
+      const remaining = [...tasks];
+      const schedule = [];
+      let time = 0;
+      let totalWaiting = 0, totalTurnaround = 0;
+
+      while (remaining.length > 0) {
+        const available = remaining.filter(t => t.arrival <= time);
+        if (available.length === 0) {
+          time = Math.min(...remaining.map(t => t.arrival));
+          continue;
+        }
+
+        const next = available.reduce((a, b) => a.burst < b.burst ? a : b);
+        const start = time;
+        const end = start + next.burst;
+        const waiting = start - next.arrival;
+        const turnaround = end - next.arrival;
+
+        schedule.push({ id: next.id, start, end });
+        totalWaiting += waiting;
+        totalTurnaround += turnaround;
+        time = end;
+
+        const index = remaining.findIndex(t => t.id === next.id);
+        remaining.splice(index, 1);
+      }
+
+      return {
+        algorithm: "SJF (Non-Preemptive)",
+        schedule,
+        averageWaitingTime: totalWaiting / tasks.length,
+        averageTurnaroundTime: totalTurnaround / tasks.length
+      };
+    }
+
+    function roundRobin(tasks, quantum = 4) {
+      const remaining = tasks.map(t => ({
+        ...t,
+        remaining: t.burst
+      }));
+      const queue = [];
+      const schedule = [];
+      let time = 0;
+      let totalWaiting = 0;
+      let totalTurnaround = 0;
+      const arrived = new Set();
+
+      while (remaining.length > 0 || queue.length > 0) {
+        for (let t of remaining) {
+          if (t.arrival <= time && !arrived.has(t.id)) {
+            queue.push(t);
+            arrived.add(t.id);
+          }
+        }
+
+        if (queue.length === 0) {
+          time++;
+          continue;
+        }
+
+        const current = queue.shift();
+        const execTime = Math.min(quantum, current.remaining);
+        const start = time;
+        const end = start + execTime;
+        schedule.push({ id: current.id, start, end });
+
+        time = end;
+        current.remaining -= execTime;
+
+        for (let t of remaining) {
+          if (t.arrival > start && t.arrival <= time && !arrived.has(t.id)) {
+            queue.push(t);
+            arrived.add(t.id);
+          }
+        }
+
+        if (current.remaining > 0) {
+          queue.push(current);
+        } else {
+          const turnaround = end - current.arrival;
+          const waiting = turnaround - current.burst;
+          totalTurnaround += turnaround;
+          totalWaiting += waiting;
+
+          const index = remaining.findIndex(t => t.id === current.id);
+          if (index !== -1) remaining.splice(index, 1);
+        }
+      }
+
+      return {
+        algorithm: `Round Robin (Q=${quantum})`,
+        schedule,
+        averageWaitingTime: totalWaiting / tasks.length,
+        averageTurnaroundTime: totalTurnaround / tasks.length
+      };
+    }
+
+    function priorityScheduling(tasks) {
+      const remaining = [...tasks];
+      const schedule = [];
+      let time = 0;
+      let totalWaiting = 0;
+      let totalTurnaround = 0;
+
+      while (remaining.length > 0) {
+        const available = remaining.filter(t => t.arrival <= time);
+        if (available.length === 0) {
+          time++;
+          continue;
+        }
+
+        const next = available.reduce((a, b) => a.priority < b.priority ? a : b);
+        const start = time;
+        const end = start + next.burst;
+        const waiting = start - next.arrival;
+        const turnaround = end - next.arrival;
+
+        schedule.push({ id: next.id, start, end });
+        totalWaiting += waiting;
+        totalTurnaround += turnaround;
+        time = end;
+
+        const index = remaining.findIndex(t => t.id === next.id);
+        remaining.splice(index, 1);
+      }
+
+      return {
+        algorithm: "Priority Scheduling",
+        schedule,
+        averageWaitingTime: totalWaiting / tasks.length,
+        averageTurnaroundTime: totalTurnaround / tasks.length
+      };
+    }
+
+    // Eseguiamo tutto
+    const results = [
+      fcfs(tasks),
+      sjf(tasks),
+      roundRobin(tasks, 4),
+      priorityScheduling(tasks)
+    ];
+
+    // Mostra risultati
+    const outputDiv = document.getElementById("output");
+    results.forEach(res => {
+      const section = document.createElement("div");
+      section.className = "section";
+      section.innerHTML = `<h2>${res.algorithm}</h2>`;
+      let content = "";
+      res.schedule.forEach(p => {
+        content += `${p.id}: start at ${p.start}, end at ${p.end}\n`;
+      });
+      content += `\nAvg Waiting Time: ${res.averageWaitingTime.toFixed(2)}`;
+      content += `\nAvg Turnaround Time: ${res.averageTurnaroundTime.toFixed(2)}`;
+      section.innerHTML += `<pre>${content}</pre>`;
+      outputDiv.appendChild(section);
+    });
+  </script>
+
+</body>
+</html>
