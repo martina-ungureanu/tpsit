@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Esercizio lezione 4</title>
+  <script src="https://unpkg.com/vue@3"></script>
+</head>
+<body>
+  <div id="app">
+    
+    <h3>1. Controllo Età</h3>
+    <input type="number" v-model="eta" placeholder="Inserisci età">
+    <p>{{ messaggioEta }}</p>
+
+   
+    <h3>2. Carrello</h3>
+    <ul>
+      <li v-for="prodotto in carrello">
+        {{ prodotto.nome }} - €{{ prodotto.prezzo }}
+      </li>
+    </ul>
+    <p>Totale: €{{ totaleCarrello }}</p>
+
+    
+    <h3>3. Username</h3>
+    <input type="text" v-model="username" placeholder="Username">
+    <p v-if="username.length > 0 && username.length < 5" style="color: red;">Username troppo corto</p>
+
+    
+    <h3>4. Salvataggio Automatico</h3>
+    <textarea v-model="testo"></textarea>
+    <p>{{ statoSalvataggio }}</p>
+  </div>
+
+  <script>
+    Vue.createApp({
+      data() {
+        return {
+          eta: 0,
+          carrello: [
+            { nome: 'Villa Rebecca', prezzo: 13000000 },
+            { nome: 'Mercedes GLE amg', prezzo: 700000 }
+          ],
+          username: '',
+          testo: '',
+          statoSalvataggio: '',
+          timeout: null
+        }
+      },
+      computed: {
+        messaggioEta() {
+          return this.eta >= 18 ? 'Maggiorenne' : 'Minorenne';
+        },
+        totaleCarrello() {
+          return this.carrello.reduce((tot, p) => tot + p.prezzo, 0);
+        }
+      },
+      watch: {
+        testo() {
+          this.statoSalvataggio = 'Sto salvando...';
+          clearTimeout(this.timeout);
+          this.timeout = setTimeout(() => {
+            this.statoSalvataggio = 'Salvato!';
+          }, 1000);
+        }
+      }
+    }).mount('#app');
+  </script>
+</body>
+</html>
+
+</head>
+<body>
+    
+</body>
+</html>
