@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Esercizio 5</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  <style>
+
+    .success {
+      background-color: #4caf50;
+      color: white;
+      padding: 10px;
+      margin: 10px 0;
+    }
+    .error {
+      background-color: #f44336;
+      color: white;
+      padding: 10px;
+      margin: 10px 0;
+    }
+
+
+    .avatar {
+      display: inline-block;
+      border-radius: 50%;
+      margin: 10px 0;
+    }
+
+
+    .card {
+      border: 1px solid #ccc;
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 5px;
+      width: 250px;
+    }
+  </style>
+</head>
+<body>
+<div id="app">
+  <!-- Esercizio 1: Stato del Messaggio -->
+  <h2>Stato del Messaggio</h2>
+  <div :class="messaggioClasse">{{ messaggio }}</div>
+  <button @click="setSuccess">Imposta come Successo</button>
+  <button @click="setError">Imposta come Errore</button>
+
+  <hr>
+
+  <!-- Esercizio 2: Avatar Personalizzabile -->
+  <h2>Avatar Personalizzabile</h2>
+  <div class="avatar" 
+       :style="{ width: avatarWidth + 'px', height: avatarHeight + 'px', backgroundColor: avatarColor }">
+  </div>
+  <br>
+  <label>Larghezza: <input type="number" v-model.number="avatarWidth"></label>
+  <label>Altezza: <input type="number" v-model.number="avatarHeight"></label>
+  <label>Colore: <input type="color" v-model="avatarColor"></label>
+
+  <hr>
+
+  <!-- Esercizio 3: Saluto Personale -->
+  <h2>Saluto Personale</h2>
+  <saluto-utente></saluto-utente>
+
+
+  <hr>
+
+  <!-- Esercizio 4: Card Semplice -->
+  <h2>Card Semplice</h2>
+  <info-card></info-card>
+
+</div>
+
+<script>
+  // Componenti Vue
+  Vue.component('saluto-utente', {
+    template: `<div>Benvenuto nella nostra applicazione!</div>`
+  });
+
+  Vue.component('info-card', {
+    template: `
+      <div class="card">
+        <h3> CARD 1 </h3>
+        <p>Contenuto della card...</p>
+      </div>
+    `
+  });
+
+  new Vue({
+    el: '#app',
+    data: {
+      // Esercizio 1
+      messaggio: 'Messaggio iniziale',
+      messaggioClasse: '',
+      // Esercizio 2
+      avatarWidth: 100,
+      avatarHeight: 100,
+      avatarColor: '#007bff'
+    },
+    methods: {
+      // Esercizio 1
+      setSuccess() {
+        this.messaggio = 'Operazione riuscita!';
+        this.messaggioClasse = 'success';
+      },
+      setError() {
+        this.messaggio = 'Si è verificato un errore!';
+        this.messaggioClasse = 'error';
+      }
+    }
+  });
+</script>
+</body>
+</html>
