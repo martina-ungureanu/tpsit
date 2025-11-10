@@ -94,10 +94,24 @@ createApp({
 
     // LISTA PRODOTTI (MODEL)
     const products = [
-      new Product(1, 'Pizza Margherita', 8, 'https://images.unsplash.com/photo-1601924582971-6e804e67d37e?auto=format&fit=crop&w=800&q=80'),
-      new Product(2, 'Lasagna al Forno', 10, 'https://images.unsplash.com/photo-1603133872878-684f4bd92d5a?auto=format&fit=crop&w=800&q=80'),
-      new Product(3, 'Tiramisù', 6, 'https://images.unsplash.com/photo-1625910860882-cb6bcb53c31a?auto=format&fit=crop&w=800&q=80'),
-      new Product(4, 'Insalata Caprese', 7, 'https://images.unsplash.com/photo-1562967916-eb82221dfb36?auto=format&fit=crop&w=800&q=80')
+      new Product(1, 'Bucket Tenders + HotWings', 8, 'lavoro di gruppo tipst/immagini/buchet tender.png'),
+      new Product(2, 'Bucket Vegano', 10, 'lavoro di gruppo tipst/immagini/buchet vegano.png'),
+      new Product(3, '9 Nuggets + Salsa', 6, 'lavoro di gruppo tipst/immagini/9 nuggets + salsa.png'),
+      new Product(4, 'Box HotDog Spicy', 7, 'lavoro di gruppo tipst/immagini/box hot dog spicy.png'),
+      new Product(5, 'Box HotDog Cheesy', 7, 'lavoro di gruppo tipst/immagini/box meal hot dog cheesy.png'),
+      new Product(6, 'Box Colonnels Burger', 7, 'lavoro di gruppo tipst/immagini/box meal Colonels.png'),
+      new Product(7, 'Box Cheese and Becon Burger', 7, 'lavoro di gruppo tipst/immagini/box meal cheese e bacon.png'),
+      new Product(8, 'Classic Chicken Burger', 7, 'lavoro di gruppo tipst/immagini/classic.png'),
+      new Product(9, 'Vegan Burger', 7, 'lavoro di gruppo tipst/immagini/classico vegetariano.png'),
+      new Product(10, 'Cheesy Doritos Fries', 7, 'lavoro di gruppo tipst/immagini/doritos fries cheesy.png'),
+      new Product(11, 'Spicy Doritos Fries', 7, 'lavoro di gruppo tipst/immagini/doritos fries spicy.png'),
+      new Product(12, 'Double Chicken BBQ and Becon', 7, 'lavoro di gruppo tipst/immagini/double BBQ.png'),
+      new Product(13, 'HotDog Spicy', 7, 'lavoro di gruppo tipst/immagini/hot hod dog spicy.png'),
+      new Product(14, 'Menù Famiglia Normale', 7, 'lavoro di gruppo tipst/immagini/menu famiglia 2 menu large e 1 junior.png'),
+      new Product(15, 'Menù Famiglia Grande', 7, 'lavoro di gruppo tipst/immagini/menu famiglia 2 menu large e 2 junior.png'),
+      new Product(16, 'Wrap di Pollo', 7, 'lavoro di gruppo tipst/immagini/wrap colonel.png'),
+      new Product(17, 'Wrap Vegano', 7, 'lavoro di gruppo tipst/immagini/wrap vegano.png'),
+
     ]
 
     // COMPUTED → totale aggiornato
