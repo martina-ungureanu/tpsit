@@ -94,23 +94,23 @@ createApp({
 
     // LISTA PRODOTTI (MODEL)
     const products = [
-      new Product(1, 'Bucket Tenders + HotWings', 8, 'lavoro di gruppo tipst/immagini/buchet tender.png'),
-      new Product(2, 'Bucket Vegano', 10, 'lavoro di gruppo tipst/immagini/buchet vegano.png'),
+      new Product(1, 'Bucket Tenders + HotWings', 18, 'lavoro di gruppo tipst/immagini/buchet tender.png'),
+      new Product(2, 'Bucket Vegano', 13, 'lavoro di gruppo tipst/immagini/buchet vegano.png'),
       new Product(3, '9 Nuggets + Salsa', 6, 'lavoro di gruppo tipst/immagini/9 nuggets + salsa.png'),
-      new Product(4, 'Box HotDog Spicy', 7, 'lavoro di gruppo tipst/immagini/box hot dog spicy.png'),
-      new Product(5, 'Box HotDog Cheesy', 7, 'lavoro di gruppo tipst/immagini/box meal hot dog cheesy.png'),
-      new Product(6, 'Box Colonnels Burger', 7, 'lavoro di gruppo tipst/immagini/box meal Colonels.png'),
-      new Product(7, 'Box Cheese and Becon Burger', 7, 'lavoro di gruppo tipst/immagini/box meal cheese e bacon.png'),
-      new Product(8, 'Classic Chicken Burger', 7, 'lavoro di gruppo tipst/immagini/classic.png'),
-      new Product(9, 'Vegan Burger', 7, 'lavoro di gruppo tipst/immagini/classico vegetariano.png'),
-      new Product(10, 'Cheesy Doritos Fries', 7, 'lavoro di gruppo tipst/immagini/doritos fries cheesy.png'),
-      new Product(11, 'Spicy Doritos Fries', 7, 'lavoro di gruppo tipst/immagini/doritos fries spicy.png'),
-      new Product(12, 'Double Chicken BBQ and Becon', 7, 'lavoro di gruppo tipst/immagini/double BBQ.png'),
-      new Product(13, 'HotDog Spicy', 7, 'lavoro di gruppo tipst/immagini/hot hod dog spicy.png'),
-      new Product(14, 'Menù Famiglia Normale', 7, 'lavoro di gruppo tipst/immagini/menu famiglia 2 menu large e 1 junior.png'),
-      new Product(15, 'Menù Famiglia Grande', 7, 'lavoro di gruppo tipst/immagini/menu famiglia 2 menu large e 2 junior.png'),
-      new Product(16, 'Wrap di Pollo', 7, 'lavoro di gruppo tipst/immagini/wrap colonel.png'),
-      new Product(17, 'Wrap Vegano', 7, 'lavoro di gruppo tipst/immagini/wrap vegano.png'),
+      new Product(4, 'Box HotDog Spicy', 9, 'lavoro di gruppo tipst/immagini/box hot dog spicy.png'),
+      new Product(5, 'Box HotDog Cheesy', 9, 'lavoro di gruppo tipst/immagini/box meal hot dog cheesy.png'),
+      new Product(6, 'Box Colonnels Burger', 10.95, 'lavoro di gruppo tipst/immagini/box meal Colonels.png'),
+      new Product(7, 'Box Cheese and Becon Burger', 12.95, 'lavoro di gruppo tipst/immagini/box meal cheese e bacon.png'),
+      new Product(8, 'Classic Chicken Burger', 4.90, 'lavoro di gruppo tipst/immagini/classic.png'),
+      new Product(9, 'Vegan Burger', 4.90, 'lavoro di gruppo tipst/immagini/classico vegetariano.png'),
+      new Product(10, 'Cheesy Doritos Fries', 3.87, 'lavoro di gruppo tipst/immagini/doritos fries cheesy.png'),
+      new Product(11, 'Spicy Doritos Fries', 3.87, 'lavoro di gruppo tipst/immagini/doritos fries spicy.png'),
+      new Product(12, 'Double Chicken BBQ and Becon', 5.98, 'lavoro di gruppo tipst/immagini/double BBQ.png'),
+      new Product(13, 'HotDog Spicy', 13, 'lavoro di gruppo tipst/immagini/hot hod dog spicy.png'),
+      new Product(14, 'Menù Famiglia Normale', 25, 'lavoro di gruppo tipst/immagini/menu famiglia 2 menu large e 1 junior.png'),
+      new Product(15, 'Menù Famiglia Grande', 28.45, 'lavoro di gruppo tipst/immagini/menu famiglia 2 menu large e 2 junior.png'),
+      new Product(16, 'Wrap di Pollo', 8.12, 'lavoro di gruppo tipst/immagini/wrap colonel.png'),
+      new Product(17, 'Wrap Vegano', 8.12, 'lavoro di gruppo tipst/immagini/wrap vegano.png'),
 
     ]
 
@@ -154,3 +154,4 @@ createApp({
     }
   }
 }).mount('#app')
+
