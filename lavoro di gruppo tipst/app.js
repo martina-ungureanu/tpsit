@@ -111,6 +111,18 @@ createApp({
       new Product(15, 'Menù Famiglia Grande', 28.45, 'lavoro di gruppo tipst/immagini/menu famiglia 2 menu large e 2 junior.png'),
       new Product(16, 'Wrap di Pollo', 8.12, 'lavoro di gruppo tipst/immagini/wrap colonel.png'),
       new Product(17, 'Wrap Vegano', 8.12, 'lavoro di gruppo tipst/immagini/wrap vegano.png'),
+      new Product(18, 'Acqua', 1.20, 'lavoro di gruppo tipst/immagini/acqua.png'),
+      new Product(19, 'Birra Peroni', 3.40, ''),
+      new Product(20, 'Actimel', 0.80, ''),
+      new Product(21, 'Caffè Espresso', 1.20, ''),
+      new Product(22, 'Mus di frutta', 2.30, ''),
+      new Product(23, 'Pepsi', 2.20, ''),
+      new Product(24, 'Redbull', 2, ''),
+      new Product(25, 'Sundae classico', 4.80, ''),
+      new Product(26, 'Sundae Nutella', 4.80, ''),
+      new Product(27, 'Sundae Galak Pistacchio', 5.80, ''),
+      new Product(28, 'Sundae Caramello ', 4.80, ''),
+      new Product(29, 'Pane e Nutella', 3.50, '')
 
     ]
 
@@ -154,4 +166,5 @@ createApp({
     }
   }
 }).mount('#app')
+
 
